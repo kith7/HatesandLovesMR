@@ -1,3 +1,6 @@
+useEffect - you can use the return statement to cleanup the function with e.g. a settimeout clearTimeout(identifier) in order not to rerender
+the component after every keystroke when e.g. validating and email
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
