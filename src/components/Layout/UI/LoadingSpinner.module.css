@@ -1,7 +1,8 @@
 .spinner {
-  display: inline-block;
+  display: flex;
   width: 80px;
   height: 80px;
+  margin: 1rem auto;
 }
 .spinner:after {
   content: " ";
@@ -10,8 +11,8 @@
   height: 64px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid teal;
-  border-color: teal transparent teal transparent;
+  border: 6px solid #7600dc;
+  border-color: #7600dc transparent #7600dc transparent;
   animation: spinner 1.2s linear infinite;
 }
 @keyframes spinner {
