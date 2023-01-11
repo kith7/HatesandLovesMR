@@ -1,16 +1,3 @@
-FInish router for single page and user loginpage
-create user account let the app know to switch to a different route when logged in - for that createa a page Loves and Hates review input boxes.
-
-userPortal in order to display a popup on how to use the app
-
-useEffect - you can use the return statement to cleanup the function with e.g. a settimeout clearTimeout(identifier) in order not to rerender
-the component after every keystroke when e.g. validating and email
-
-firestore - authentication, connecting user with his db entries?
-context and reducer for auth
-context and reducer for adding data with fetch post after the user is logged in
-dashboard where the user can add or remove movies to watch - you can watch adding a cart context and cart reducer lecture 141
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
