@@ -29,6 +29,8 @@ const MostPopular = () => {
                 overview={movie.overview}
                 releaseDate={movie.release_date}
                 rating={movie.vote_average}
+                id={movie.id}
+                rest={movie}
               />
             );
           })}
