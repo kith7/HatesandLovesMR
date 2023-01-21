@@ -1,15 +1,27 @@
-import React, { useState } from "react";
-
-const AddIpnut = (props) => {
+import React, { useState, useContext } from "react";
+import { ReviewsCntxt } from "../../store/ReviewsContext";
+const AddIpnut = ({ details }) => {
+  // console.log(details);
   const [likes, setLikes] = useState("");
   const [hates, setHates] = useState("");
+  const ctxt = useContext(ReviewsCntxt);
+
   const handleAdd = (e) => {
-    console.log(props);
+    e.preventDefault();
+    const newItem = {
+      likes,
+      hates,
+      title: details.title,
+      image: details.image,
+      id: details.id,
+    };
+    ctxt.addMovie(newItem);
+    console.log(ctxt);
   };
   return (
     <div>
       <p>Movie loves&hates</p>
-      <form>
+      <form onSubmit={(e) => handleAdd(e)}>
         <input
           type='text'
           className='form-input'
@@ -24,14 +36,7 @@ const AddIpnut = (props) => {
           value={hates}
           onChange={(e) => setHates(e.target.value)}
         />
-        <button
-          onClick={() => {
-            handleAdd();
-          }}
-          type='button'
-        >
-          Add
-        </button>
+        <button>Add</button>
       </form>
     </div>
   );

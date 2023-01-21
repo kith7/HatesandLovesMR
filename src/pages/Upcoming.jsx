@@ -2,10 +2,12 @@ import React from "react";
 import useMoviesFetch from "../hooks/useMoviesFetch";
 import MovieItem from "../components/MovieItem/MovieItem";
 import LoadingSpinner from "../components/Layout/UI/LoadingSpinner";
+
 const Upcoming = () => {
   const API_KEY = process.env.REACT_APP_API_KEY;
   const url = `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`;
   const [data, errMsg, isLoading] = useMoviesFetch(url);
+
   return (
     <div>
       {isLoading && (

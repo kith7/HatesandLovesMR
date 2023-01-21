@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ReviewsCntxt } from "../store/ReviewsContext";
 
 const Dashboard = () => {
-  return <div>Get stored data from firebase and edit it</div>;
+  const ctxt = useContext(ReviewsCntxt);
+  return (
+    <div>
+      <button
+        onClick={() => {
+          console.log(ctxt);
+        }}
+      ></button>
+    </div>
+  );
 };
 
 export default Dashboard;

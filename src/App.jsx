@@ -4,9 +4,10 @@ import "./App.css";
 
 // import MoviesSearchBox from "./components/MoviesSearchBox";
 import Layout from "./components/Layout/Layout";
-import ErrorPage from "./pages/ErrorPage";
+
 import MoviesSearchPage from "./pages/MoviesSearchPage";
 import LoadingSpinner from "./components/Layout/UI/LoadingSpinner";
+import Dashboard from "./pages/Dashboard";
 // import MostPopular from "./pages/MostPopular";
 // import TopRated from "./pages/TopRated";
 // import Upcoming from "./pages/Upcoming";
@@ -25,7 +26,8 @@ function App() {
             <Route path='/upcoming' element={<Upcoming />} />
             <Route path='/top-rated' element={<TopRated />} />
             <Route path='/most-popular' element={<MostPopular />} />
-            <Route path='/*' element={<ErrorPage />} />
+            <Route path='/most-popular' element={<MostPopular />} />
+            <Route path='/dashboard' element={<Dashboard />} />
           </Route>
         </Routes>
       </Suspense>

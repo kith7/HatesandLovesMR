@@ -2,7 +2,10 @@ import React from "react";
 import classes from "./MovieItem.module.css";
 import AddIpnut from "../addMovies/AddIpnut";
 const MovieItem = (props) => {
-  const details = { ...props };
+  const details = {
+    ...props,
+    image: `https://image.tmdb.org/t/p/w185_and_h278_bestv2/${props.imgSrc}`,
+  };
   return (
     <div className={classes.card}>
       <h3 className={classes.cardTitle}>{props.title}</h3>

@@ -1,3 +1,4 @@
+import { type } from "@testing-library/user-event/dist/type";
 import React, { useEffect, useState, useReducer, createContext } from "react";
 
 const REVIEW_ACTION_TYPES = {
@@ -15,14 +16,18 @@ const INITIAL_STATE = {
 };
 
 const reviewReducer = (state, action) => {
+  console.log("dispathec sth new", action, state);
   switch (action.type) {
     case REVIEW_ACTION_TYPES.ADD_REVIEW:
+      // const existingReview = state.id === action.id;
+      // if (existingReview) {
+      //   return { ...state };
+      // } else {
       return { ...state, ...action.payload };
-
-    case REVIEW_ACTION_TYPES.REMOVE_REVIEW:
-      return { ...state, ...action.payload };
-
+    // }
     case REVIEW_ACTION_TYPES.EDIT_REVIEW:
+      return { ...state, ...action.payload };
+    case REVIEW_ACTION_TYPES.REMOVE_REVIEW:
       return { ...state, ...action.payload };
     default:
       return { ...state };
@@ -32,7 +37,7 @@ const reviewReducer = (state, action) => {
 const ReviewsCntxt = createContext({
   title: "",
   image: "",
-  add: () => {},
+  addMovie: () => {},
   remove: () => {},
   edit: () => {},
   loves: "",
@@ -41,25 +46,35 @@ const ReviewsCntxt = createContext({
 });
 
 const ReviewsCtxtProvider = (props) => {
+  const [reviewsState, dispatchReviewsState] = useReducer(
+    reviewReducer,
+    INITIAL_STATE
+  );
+
+  const addMovie = (item) => {
+    dispatchReviewsState({
+      type: REVIEW_ACTION_TYPES.ADD_REVIEW,
+      ...item,
+    });
+  };
   const value = {
     title: "",
     image: "",
-    add: () => {},
+    addMovie: addMovie,
     remove: () => {},
     edit: () => {},
     loves: "",
     hates: "",
     id: "",
   };
-
-  const [reviewsState, dispatchReviewsState] = useReducer(
-    reviewReducer,
-    INITIAL_STATE
-  );
-
+  React.useEffect(() => {
+    console.log("pinned state", reviewsState);
+  }, [reviewsState]);
   return (
     <ReviewsCntxt.Provider value={value}>
       {props.children}
     </ReviewsCntxt.Provider>
   );
 };
+
+export { ReviewsCtxtProvider, ReviewsCntxt };
