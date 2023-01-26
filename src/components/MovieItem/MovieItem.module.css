@@ -2,22 +2,115 @@
   padding: 2rem 4rem;
   border-radius: 10px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-  margin-bottom: 2rem;
-  background-color: white;
-}
 
-.cardTitle {
-  margin-bottom: 1.5rem;
-  font-size: 2.2rem;
-  text-align: center;
-}
-
-.cardImage {
+  background-color: #7500dc05;
+  display: flex;
+  backdrop-filter: blur(4px);
+  width: 90%;
   margin: 0 auto;
-  display: block;
+  margin-bottom: 2rem;
+  gap: 15px;
+  z-index: 1;
+  position: relative;
+  /* grid-template-rows: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    "a b b"
+    "a c c"
+    "a e f"; */
 }
+
+@media only screen and (max-width: 735px) {
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .card__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cardImage {
+    margin: 0 auto;
+    display: block;
+    /* grid-area: a; */
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  }
+}
+.card__content {
+  display: flex;
+  flex-direction: column;
+}
+.cardImage {
+  margin: auto;
+  margin-right: 10px;
+  display: block;
+  /* grid-area: a; */
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+}
+.cardTitle {
+  margin-bottom: 0.1rem;
+  font-size: 1.8rem;
+  text-align: left;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+  text-transform: uppercase;
+
+  /* grid-area: b; */
+}
+.card__content p {
+  font-size: 1rem;
+  letter-spacing: 0.9px;
+
+  /* grid-area: c; */
+}
+.card__rating {
+  display: flex;
+}
+.card__input {
+  margin-left: 26px;
+}
+/* .card__input {
+  grid-area: f;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+} */
 
 small {
   font-size: 0.8rem;
   margin-bottom: 0;
+}
+
+@media only screen and (max-width: 735px) {
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .card__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cardImage {
+    margin: 0 auto;
+    display: block;
+    /* grid-area: a; */
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  }
 }

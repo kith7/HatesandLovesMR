@@ -1,38 +1,5 @@
-import { type } from "@testing-library/user-event/dist/type";
 import React, { useEffect, useState, useReducer, createContext } from "react";
-
-const REVIEW_ACTION_TYPES = {
-  ADD_REVIEW: "ADD_REVIEW",
-  REMOVE_REVIEW: "REMOVE_REVIEW",
-  EDIT_REVIEW: "EDIT_REVIEW",
-};
-
-const INITIAL_STATE = {
-  title: "",
-  image: "",
-  loves: "",
-  hates: "",
-  id: "",
-};
-
-const reviewReducer = (state, action) => {
-  console.log("dispathec sth new", action, state);
-  switch (action.type) {
-    case REVIEW_ACTION_TYPES.ADD_REVIEW:
-      // const existingReview = state.id === action.id;
-      // if (existingReview) {
-      //   return { ...state };
-      // } else {
-      return { ...state, ...action.payload };
-    // }
-    case REVIEW_ACTION_TYPES.EDIT_REVIEW:
-      return { ...state, ...action.payload };
-    case REVIEW_ACTION_TYPES.REMOVE_REVIEW:
-      return { ...state, ...action.payload };
-    default:
-      return { ...state };
-  }
-};
+import reviewsReducer from "./reviewsReducer";
 
 const ReviewsCntxt = createContext({
   title: "",
@@ -45,28 +12,57 @@ const ReviewsCntxt = createContext({
   id: "",
 });
 
+const INITIAL_STATE = {
+  reviews: [],
+};
+
 const ReviewsCtxtProvider = (props) => {
   const [reviewsState, dispatchReviewsState] = useReducer(
-    reviewReducer,
+    reviewsReducer,
     INITIAL_STATE
   );
 
-  const addMovie = (item) => {
+  const addMovie = (newItem) => {
+    const items = [...reviewsState.reviews];
+    const isInReviews = items.find((item) => item.id === newItem.id);
+    if (isInReviews) return;
+    const addedItems = [newItem, ...items];
     dispatchReviewsState({
-      type: REVIEW_ACTION_TYPES.ADD_REVIEW,
-      ...item,
+      type: "MODIFY_REVIEWS",
+      payload: { ...reviewsState, reviews: [...addedItems] },
     });
   };
-  const value = {
-    title: "",
-    image: "",
-    addMovie: addMovie,
-    remove: () => {},
-    edit: () => {},
-    loves: "",
-    hates: "",
-    id: "",
+
+  const removeMovie = (itemId) => {
+    const items = [...reviewsState.reviews];
+    const updatedItems = items.filter((item) => item.id !== itemId);
+    dispatchReviewsState({
+      type: "MODIFY_REVIEWS",
+      payload: { ...reviewsState, reviews: [...updatedItems] },
+    });
   };
+
+  const updateMovie = (itemId, likes, hates) => {
+    const items = [...reviewsState.reviews];
+    const isInReviews = items.find((item) => item.id === itemId);
+    if (isInReviews) {
+      const updatedItems = items.map((movie) =>
+        movie.id === itemId ? { ...movie, likes: likes, hates: hates } : movie
+      );
+      dispatchReviewsState({
+        type: "MODIFY_REVIEWS",
+        payload: { ...reviewsState, reviews: [...updatedItems] },
+      });
+    }
+  };
+
+  const value = {
+    addMovie: addMovie,
+    removeMovie: removeMovie,
+    editMovie: updateMovie,
+    reviewsState,
+  };
+
   React.useEffect(() => {
     console.log("pinned state", reviewsState);
   }, [reviewsState]);

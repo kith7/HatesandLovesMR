@@ -2,6 +2,8 @@ nav {
   position: sticky;
   top: 0;
   right: 0;
+  z-index: 15;
+  width: 100%;
 }
 nav ul {
   margin: 0;
@@ -15,6 +17,7 @@ nav ul {
   margin-bottom: 1rem;
   position: relative;
   transform: translateX(0);
+  z-index: 1;
   top: 0;
 }
 .navbar {
@@ -23,6 +26,9 @@ nav ul {
   margin-bottom: 3rem;
   padding-bottom: 1rem;
   border-bottom: 0.1px solid #7600dc1c;
+  backdrop-filter: blur(5px);
+  width: 100%;
+  z-index: 15;
 }
 .navbar li {
   display: inline-block;

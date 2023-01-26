@@ -19,3 +19,23 @@ body {
   background-color: rgb(244, 244, 244);
   color: #333;
 }
+
+.button {
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 50% 20% / 10% 40%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 250ms;
+}
+
+.button:hover {
+  background-color: #7600dc;
+  color: #fff;
+}
+.button:disabled {
+  background-color: #7500dc7c;
+  color: #fff;
+  cursor: not-allowed;
+}

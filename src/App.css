@@ -16,7 +16,7 @@ p {
   transform: translateX(0);
 }
 
-.button {
+/* .button {
   background-color: rgba(0, 0, 0, 0.75);
   color: white;
   padding: 1rem 2rem;
@@ -29,7 +29,7 @@ p {
 
 .button:hover {
   background-color: rgba(0, 0, 0, 0.85);
-}
+} */
 
 .centered {
   margin: 3rem auto;
@@ -37,4 +37,27 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.card {
+  padding: 1rem 1rem;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  background-color: #7500dc05;
+  display: flex;
+  backdrop-filter: blur(4px);
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  z-index: 1;
+  position: relative;
+}
+
+textarea {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  resize: vertical;
+  overflow: auto;
 }

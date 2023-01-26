@@ -8,17 +8,27 @@ const MovieItem = (props) => {
   };
   return (
     <div className={classes.card}>
-      <h3 className={classes.cardTitle}>{props.title}</h3>
       <img
         className={classes.cardImage}
         src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${props.imgSrc}`}
         alt={props.title + " poster"}
       />
-      <p>{props.overview}</p>
-      <small>RELEASE DATE: {props.releaseDate}</small>
-      <br />
-      <small>RATING: {props.rating}</small>
-      <AddIpnut details={details} />
+      <div className={classes.card__content}>
+        <h3 className={classes.cardTitle}>{props.title}</h3>
+        <p className={classes.card__overview}>{props.overview}</p>
+        <div className={classes.card__rating}>
+          <div>
+            <p>
+              <small>RELEASE DATE: {props.releaseDate}</small>
+              <br />
+              <small>RATING: {props.rating}</small>
+            </p>
+          </div>
+          <div className={classes.card__input}>
+            <AddIpnut details={details} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

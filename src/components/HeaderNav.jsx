@@ -72,6 +72,22 @@ const Header = () => {
               Most popular
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to='/dashboard'
+              className='navbar__link'
+              style={({ isActive }) =>
+                isActive
+                  ? {
+                      color: "#fff",
+                      background: "#7600dc",
+                    }
+                  : {}
+              }
+            >
+              Dashboard
+            </NavLink>
+          </li>
         </ul>
       </nav>
       <h1 className={"headerTitle"}>MyFavMov ReactDB</h1>
