@@ -22,7 +22,6 @@ const Header = () => {
               Home
             </NavLink>
           </li>
-
           <li>
             <NavLink
               to='/upcoming'
@@ -42,7 +41,7 @@ const Header = () => {
 
           <li>
             <NavLink
-              to='/top-rated'
+              to='/login'
               className='navbar__link'
               style={({ isActive }) =>
                 isActive
@@ -53,23 +52,7 @@ const Header = () => {
                   : {}
               }
             >
-              Top rated
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to='/most-popular'
-              className='navbar__link'
-              style={({ isActive }) =>
-                isActive
-                  ? {
-                      color: "#fff",
-                      background: "#7600dc",
-                    }
-                  : {}
-              }
-            >
-              Most popular
+              Login
             </NavLink>
           </li>
           <li>
@@ -96,3 +79,8 @@ const Header = () => {
 };
 
 export default Header;
+
+// upcoming
+// most-popular
+// login
+// dashboard

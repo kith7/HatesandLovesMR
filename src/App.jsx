@@ -8,6 +8,7 @@ import Layout from "./components/Layout/Layout";
 import MoviesSearchPage from "./pages/MoviesSearchPage";
 import LoadingSpinner from "./components/Layout/UI/LoadingSpinner";
 import Dashboard from "./pages/Dashboard";
+
 // import MostPopular from "./pages/MostPopular";
 // import TopRated from "./pages/TopRated";
 // import Upcoming from "./pages/Upcoming";
@@ -15,7 +16,7 @@ import Dashboard from "./pages/Dashboard";
 const Upcoming = lazy(() => import("./pages/Upcoming"));
 const MostPopular = lazy(() => import("./pages/MostPopular"));
 const TopRated = lazy(() => import("./pages/TopRated"));
-
+const Login = lazy(() => import("./pages/Login"));
 function App() {
   return (
     <div className='container'>
@@ -24,9 +25,8 @@ function App() {
           <Route path='/' element={<Layout />}>
             <Route index element={<MoviesSearchPage />} />
             <Route path='/upcoming' element={<Upcoming />} />
-            <Route path='/top-rated' element={<TopRated />} />
             <Route path='/most-popular' element={<MostPopular />} />
-            <Route path='/most-popular' element={<MostPopular />} />
+            <Route path='/login' element={<Login />} />
             <Route path='/dashboard' element={<Dashboard />} />
           </Route>
         </Routes>

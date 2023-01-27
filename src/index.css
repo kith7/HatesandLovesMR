@@ -39,3 +39,7 @@ body {
   color: #fff;
   cursor: not-allowed;
 }
+
+.google_btn {
+  background-color: rgb(66, 133, 244);
+}

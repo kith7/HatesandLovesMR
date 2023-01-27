@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { ReviewsCntxt } from "../store/ReviewsContext";
 import DashboardMovieItem from "../components/MovieItem/DashBoardMovieItem";
+
 const Dashboard = () => {
   const ctxt = useContext(ReviewsCntxt);
   const { reviews } = ctxt.reviewsState;

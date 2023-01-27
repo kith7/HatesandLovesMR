@@ -1,11 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext, useReducer } from "react";
+import authReducer from "./authReducer";
 
-const UserCntxt = React.createContext({
-  isLoggedIn: false,
-  onLogin: () => {},
-  onLogout: () => {},
+export const UserCntxt = createContext({
+  currentUser: null,
+  setCurrentUser: () => null,
 });
 
+const INITIAL_STATE = {
+  currentUser: null,
+};
+
 export const UserCtxtProvider = (props) => {
-  return <UserCntxt.Provider>{props.children}</UserCntxt.Provider>;
+  const [currentUser, dispatchUser] = useReducer(authReducer, INITIAL_STATE);
+
+  const setCurrentUser = (user) => {
+    dispatchUser({
+      type: "SET_CUR_USER",
+      payload: user,
+    });
+  };
+
+  const value = {
+    currentUser,
+    setCurrentUser,
+  };
+
+  return (
+    <UserCntxt.Provider value={value}>{props.children}</UserCntxt.Provider>
+  );
 };
