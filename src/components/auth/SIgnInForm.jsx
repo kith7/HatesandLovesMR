@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import classes from "./SIgnForm.module.css";
+import {
+  signInAuthWithEmailAndPassword,
+  signInWithGooglePopup,
+} from "../../utils/firebase/firebase";
 const defaultFormValues = {
   email: "",
   password: "",
 };
 
 const SignInForm = () => {
-  const [fields, setFormFields] = useState(defaultFormValues);
+  const [formFields, setFormFields] = useState(defaultFormValues);
+  const { email, password } = formFields;
   const [accError, setAccErr] = useState("");
 
   const resetFormFields = () => {
@@ -14,27 +19,27 @@ const SignInForm = () => {
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormFields({ ...fields, [name]: value });
+    setFormFields({ ...formFields, [name]: value });
   };
 
-  //   const handleSubmit = async (e) => {
-  //     e.preventDefault();
-  //     try {
-  //       await signInAuthWithEmailAndPassword(email, password);
-  //       resetFormFields();
-  //     } catch (err) {
-  //       if (err.code === "auth/wrong-password") {
-  //         setAccErr("incorrect password for email");
-  //         console.error("login error", err);
-  //       }
-  //       if (err.code === "auth/user-not-found") {
-  //         setAccErr("Please register before loginig in");
-  //       } else {
-  //         console.error("login error", err);
-  //         setAccErr(err);
-  //       }
-  //     }
-  //   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await signInAuthWithEmailAndPassword(email, password);
+      resetFormFields();
+    } catch (err) {
+      if (err.code === "auth/wrong-password") {
+        setAccErr("incorrect password for email");
+        console.error("login error", err);
+      }
+      if (err.code === "auth/user-not-found") {
+        setAccErr("Please register before loginig in");
+      } else {
+        console.error("login error", err);
+        setAccErr(err);
+      }
+    }
+  };
   return (
     <div>
       <div className={classes.sign_up_container}>
@@ -58,12 +63,12 @@ const SignInForm = () => {
             placeholder='Enter your password'
           />
           <div className={classes.buttons_container}>
-            <button type='submit' className='button'>
+            <button type='submit' className='button' onClick={handleSubmit}>
               Sign in
             </button>
             <button
               type='button'
-              onClick={console.log("dat")}
+              onClick={signInWithGooglePopup}
               className='button google_btn'
             >
               Google sign in

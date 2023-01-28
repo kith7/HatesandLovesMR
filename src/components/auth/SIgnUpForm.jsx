@@ -1,5 +1,8 @@
 import { useState } from "react";
-
+import {
+  createAuthUserWithEmailAndPassword,
+  createUserDocumentFromAuth,
+} from "../../utils/firebase/firebase";
 import classes from "./SIgnForm.module.css";
 
 const defaultFormFields = {
@@ -20,25 +23,25 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // if (password !== confirmPassword) {
-    //   alert("passwords do not match");
-    //   return;
-    // }
+    if (password !== confirmPassword) {
+      alert("passwords do not match");
+      return;
+    }
 
-    // try {
-    //   const { user } = await createAuthUserWithEmailAndPassword(
-    //     email,
-    //     password
-    //   );
-    //   await createUserDocumentFromAuth(user, { displayName });
-    //   resetFormFields();
-    // } catch (error) {
-    //   if (error.code === "auth/email-already-in-use") {
-    //     alert("Cannot create user, email already in use");
-    //   } else {
-    //     console.log("user creation encountered an error", error);
-    //   }
-    // }
+    try {
+      const { user } = await createAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
+      await createUserDocumentFromAuth(user, { displayName });
+      resetFormFields();
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        alert("Cannot create user, email already in use");
+      } else {
+        console.log("user creation encountered an error", error);
+      }
+    }
   };
 
   const handleChange = (event) => {

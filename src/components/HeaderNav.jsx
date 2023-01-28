@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../store/authContext";
 import { NavLink } from "react-router-dom";
+import { signOutUser } from "../utils/firebase/firebase";
 import "./HeaderNav.css";
 const Header = () => {
+  const { currentUser } = useContext(UserContext);
+  const signUserOut = () => {
+    signOutUser();
+  };
   return (
     <>
       <nav>
@@ -38,23 +44,6 @@ const Header = () => {
               Upcoming
             </NavLink>
           </li>
-
-          <li>
-            <NavLink
-              to='/login'
-              className='navbar__link'
-              style={({ isActive }) =>
-                isActive
-                  ? {
-                      color: "#fff",
-                      background: "#7600dc",
-                    }
-                  : {}
-              }
-            >
-              Login
-            </NavLink>
-          </li>
           <li>
             <NavLink
               to='/dashboard'
@@ -70,6 +59,42 @@ const Header = () => {
             >
               Dashboard
             </NavLink>
+          </li>
+          <li>
+            {!currentUser ? (
+              <NavLink
+                to='/login'
+                className='navbar__link'
+                style={({ isActive }) =>
+                  isActive
+                    ? {
+                        color: "#fff",
+                        background: "#7600dc",
+                      }
+                    : {}
+                }
+              >
+                Login
+              </NavLink>
+            ) : (
+              <NavLink
+                className='navbar__link'
+                onClick={() => {
+                  signUserOut();
+                }}
+                to='/'
+                style={({ isActive }) =>
+                  isActive
+                    ? {
+                        color: "#fff",
+                        background: "#7600dc",
+                      }
+                    : {}
+                }
+              >
+                Logout
+              </NavLink>
+            )}
           </li>
         </ul>
       </nav>

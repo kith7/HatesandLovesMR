@@ -11,6 +11,7 @@ import {
   setDoc,
   doc,
   serverTimestamp,
+  Timestamp,
 } from "@firebase/firestore";
 import {
   GoogleAuthProvider,
@@ -21,9 +22,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "@firebase/auth";
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { async } from "q";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -41,7 +40,6 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 //google auth provider
-export const user = auth.currentUser;
 
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({
@@ -50,86 +48,97 @@ provider.setCustomParameters({
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
 //create email and password auth
 
-export const addNewUserWithEmailAndPassword = async (email, password) => {
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
-  await createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      console.log(user);
-      return user;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-      // ..
-    });
+  return await createUserWithEmailAndPassword(auth, email, password);
 };
 
-export const signInWithUserEmail = async (email, password) => {
+export const signInAuthWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      console.log(user);
-      return;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-    });
+  return await signInWithEmailAndPassword(auth, email, password);
 };
 
-export const signTheUserOut = async () => {
-  await signOut(auth)
-    .then(() => {
-      console.log("signed out successfully");
-    })
-    .catch((error) => {
-      // An error happened.
-      console.log(error);
-    });
-};
+export const signOutUser = async () => await signOut(auth);
 
-export const onAuthStateChangedListener = () =>
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid;
-      console.log(user);
-      // ...
-    } else {
-      // User is signed out
-      // ...
-    }
-  });
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);
 
-export const createUserDocFromAuth = async (
-  authUser,
-  additionalDetails = {}
+export const createUserDocumentFromAuth = async (
+  userAuth,
+  additionalInfo = {}
 ) => {
-  if (!authUser) return;
-  const userDocRef = doc(db, "users", authUser.uid);
+  if (!userAuth) return;
+  const userDocRef = doc(db, "users", userAuth.uid);
+
   const userSnapshot = await getDoc(userDocRef);
   if (!userSnapshot.exists()) {
-    const { displayName, email } = authUser;
+    const { displayName, email } = userAuth;
     const createdDate = serverTimestamp();
     try {
-      await setDoc(authUser, {
+      await setDoc(userDocRef, {
         displayName,
         email,
         createdDate,
-        ...additionalDetails,
+        ...additionalInfo,
       });
-    } catch (e) {
-      console.log(e.message);
+    } catch (err) {
+      console.log("error while creating the user", err.message);
     }
   }
   return userDocRef;
+};
+
+export const getUserProfileData = async (uid) => {
+  if (!uid) return;
+  const docRef = doc(db, "users", uid);
+  try {
+    const docSnap = await getDoc(docRef);
+    const loggedUser = docSnap.data();
+    console.log(loggedUser);
+    return loggedUser;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const addReviewsToFirestore = async (movieItem, uid) => {
+  if (!uid) return;
+  const newReviewRef = doc(collection(db, "reviews"));
+  try {
+    await setDoc(newReviewRef, {
+      ...movieItem,
+      uid,
+      date: serverTimestamp(),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateReviesFromFireStore = async (filmId, userid) => {
+  const collectionRef = collection(db, "reviews");
+  const q = query(collectionRef, where("id", "==", filmId));
+  const qsnapShot = await getDocs(q);
+  qsnapShot.forEach((snap) => console.log(snap.data()));
+};
+
+export const getUsersReviesFromFireStore = async (userid) => {
+  const collectionRef = collection(db, "reviews");
+  const q = query(collectionRef, where("uid", "==", userid));
+  const qsnapShot = await getDocs(q);
+  const usersReviews = [];
+  qsnapShot.forEach((snap) => usersReviews.push(snap.data()));
+  console.log(usersReviews);
+  return usersReviews;
+};
+
+export const getReviewsFromFirestore = async (uid) => {
+  const collectionRef = collection(db, "reviews");
+  const q = query(collectionRef);
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.data());
+  });
+  console.log(querySnapshot);
 };
