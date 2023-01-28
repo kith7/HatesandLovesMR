@@ -20,8 +20,8 @@ const Dashboard = () => {
   const noMoviews = (
     <div className='card centered'>
       <h3>
-        First, add some movies, next go back to your dashboard to manage edit or
-        remove them from your database.
+        To use the Dashboard, first you need to add some reviews in order to
+        manage them here.
       </h3>
     </div>
   );

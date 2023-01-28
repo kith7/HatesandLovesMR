@@ -1,9 +1,18 @@
 import React, { useState, useContext } from "react";
 import { ReviewsCntxt } from "../../store/ReviewsContext";
+import { UserContext } from "../../store/authContext";
+import classes from "./addinput.module.css";
+
 const AddIpnut = ({ details }) => {
   const [likes, setLikes] = useState("");
   const [hates, setHates] = useState("");
+  const plsLogin = (
+    <h3 className={classes.loginmessage}>
+      Login or create an account to add and manage reviews.
+    </h3>
+  );
   const ctxt = useContext(ReviewsCntxt);
+  const { currentUser } = useContext(UserContext);
 
   const disableButton = ctxt.reviewsState.reviews.find(
     (movie) => movie.id === details.id
@@ -11,6 +20,7 @@ const AddIpnut = ({ details }) => {
 
   const handleAdd = (e) => {
     e.preventDefault();
+    if (!currentUser) return;
     const newItem = {
       likes,
       hates,
@@ -25,6 +35,7 @@ const AddIpnut = ({ details }) => {
   return (
     <div>
       <p>Movie loves&hates</p>
+      {!currentUser && plsLogin}
       <form onSubmit={(e) => handleAdd(e)}>
         <textarea
           rows={2}
