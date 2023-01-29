@@ -4,7 +4,8 @@ import { ReviewsCntxt } from "../../store/ReviewsContext";
 import { UserContext } from "../../store/authContext";
 import {
   addReviewsToFirestore,
-  getReviewsFromFirestore,
+  getAllReviewsFromFirestore,
+  updateReviewsToFireStore,
   getUserProfileData,
   updateReviesFromFireStore,
 } from "../../utils/firebase/firebase";
@@ -18,18 +19,13 @@ const DashboardMovieItem = (props) => {
   const itemId = props.id;
 
   const handleRemove = () => {
-    const itemId = props.id;
     ctxt.removeMovie(itemId);
-    console.log(currentUser);
   };
   const handleUpdate = () => {
     ctxt.editMovie(itemId, likes, hates);
-    addReviewsToFirestore(props, currentUser.uid);
     setUpdated("Update successful");
   };
-  const getProfileData = async () => getUserProfileData(currentUser.uid);
 
-  const getareview = async () => updateReviesFromFireStore(itemId);
   return (
     <div className={classes.card}>
       <div className={classes.card__content}>
@@ -75,11 +71,6 @@ const DashboardMovieItem = (props) => {
               {updated}
             </div>
           </div>
-          <button onClick={() => getReviewsFromFirestore()}>
-            GETFIRESTOREDATA
-          </button>
-          <button onClick={() => getProfileData()}>getuser data</button>
-          <button onClick={() => getareview()}>get a review</button>
         </div>
       </div>
     </div>

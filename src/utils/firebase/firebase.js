@@ -10,8 +10,9 @@ import {
   getDoc,
   setDoc,
   doc,
+  updateDoc,
   serverTimestamp,
-  Timestamp,
+  deleteDoc,
 } from "@firebase/firestore";
 import {
   GoogleAuthProvider,
@@ -115,14 +116,59 @@ export const addReviewsToFirestore = async (movieItem, uid) => {
   }
 };
 
-export const updateReviesFromFireStore = async (filmId, userid) => {
+const getDocumentId = async (filmId, userId) => {
+  if (!userId) return;
   const collectionRef = collection(db, "reviews");
-  const q = query(collectionRef, where("id", "==", filmId));
+  const q = query(
+    collectionRef,
+    where("uid", "==", userId),
+    where("id", "==", filmId)
+  );
   const qsnapShot = await getDocs(q);
-  qsnapShot.forEach((snap) => console.log(snap.data()));
+  let documentId;
+  qsnapShot.forEach((snap) => (documentId = snap.id));
+  return documentId;
 };
 
-export const getUsersReviesFromFireStore = async (userid) => {
+export const removeReviewFromFirestore = async (filmId, userId) => {
+  const docId = await getDocumentId(filmId, userId);
+  if (!docId) return;
+
+  try {
+    await deleteDoc(doc(db, "reviews", docId));
+    console.log("item removed from firebase");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const updateReviewsToFireStore = async (
+  filmId,
+  userId,
+  likes,
+  hates
+) => {
+  const docId = await getDocumentId(filmId, userId);
+  if (!docId) return;
+
+  const docRef = doc(db, "reviews", docId);
+  const itemData = {
+    likes: likes,
+    hates: hates,
+  };
+  updateDoc(docRef, itemData)
+    .then((docRef) => {
+      console.log(
+        "A New Document Field has been added to an existing document"
+      );
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const getUserReviesFromFireStore = async (userid) => {
+  if (!userid) return;
   const collectionRef = collection(db, "reviews");
   const q = query(collectionRef, where("uid", "==", userid));
   const qsnapShot = await getDocs(q);
@@ -132,12 +178,12 @@ export const getUsersReviesFromFireStore = async (userid) => {
   return usersReviews;
 };
 
-export const getReviewsFromFirestore = async (uid) => {
+export const getAllReviewsFromFirestore = async (userid) => {
+  if (!userid) return;
   const collectionRef = collection(db, "reviews");
   const q = query(collectionRef);
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
     console.log(doc.data());
   });
   console.log(querySnapshot);
