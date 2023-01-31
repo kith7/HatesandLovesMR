@@ -26,18 +26,7 @@ const Dashboard = () => {
     </div>
   );
 
-  return (
-    <div>
-      {Movies.length === 0 ? noMoviews : Movies}
-      <button
-        onClick={() => {
-          console.log(ctxt);
-        }}
-      >
-        Get clicked
-      </button>
-    </div>
-  );
+  return <div>{Movies.length === 0 ? noMoviews : Movies}</div>;
 };
 
 export default Dashboard;

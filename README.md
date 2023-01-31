@@ -1,3 +1,9 @@
+The app allows a logged in user (either with email or google sign in) to find movies, create short loves and hates reviews, store, update, and remove them from a database (Google Firebase) .
+
+It utilises tools like: react, react router, contex, reducers, custom hooks, data fetching, css modules, spinners, and memoiziation techniques.
+
+If you want to use it, you have to get your own api keyfrom themoviedb.org and set up your own Firestore db.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -34,12 +34,13 @@ const AddIpnut = ({ details }) => {
   };
   return (
     <div>
-      <p>Movie loves&hates</p>
+      <h3>Movie Loves&Hates</h3>
       {!currentUser && plsLogin}
       <form onSubmit={(e) => handleAdd(e)}>
         <textarea
-          rows={2}
-          cols={30}
+          placeholder='Tell us why you loved it using only 160 chars'
+          rows={3}
+          cols={60}
           className='form-input'
           maxLength={160}
           id='name'
@@ -48,8 +49,9 @@ const AddIpnut = ({ details }) => {
         />{" "}
         <br />
         <textarea
-          rows={2}
-          cols={30}
+          placeholder='Tell us what you hated about it using only 160 chars'
+          rows={3}
+          cols={60}
           maxLength={160}
           type='text'
           className='form-input'
