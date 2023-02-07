@@ -15,7 +15,7 @@ import Dashboard from "./pages/Dashboard";
 
 const Upcoming = lazy(() => import("./pages/Upcoming"));
 const MostPopular = lazy(() => import("./pages/MostPopular"));
-const TopRated = lazy(() => import("./pages/TopRated"));
+// const TopRated = lazy(() => import("./pages/TopRated"));
 const Login = lazy(() => import("./pages/Login"));
 function App() {
   return (
